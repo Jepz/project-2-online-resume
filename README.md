@@ -1,1 +1,2 @@
-# udacity-project-2
+# udacity-project-0
+Udacity FE project 0
