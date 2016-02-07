@@ -1,14 +1,14 @@
 var bio = {
     "name": "Jesper",
     "role": "Ninja",
-    "contacts": [{
+    "contacts": {
         "mobile": "650-555-5555",
         "email": "doe@john.web",
         "github": "Jepz",
         "blog": "jepz.me",
         "twitter": "jeppsonone",
         "location": "London, UK, Europe"
-    }],
+    },
     "welcomeMessage": "Hell! This is a welcome message",
     "skills": ["code", "design", "ux"],
     "bioPic": "http://png.clipart.me/graphics/thumbs/162/man-smoking-marijuana-cigarette-and-wearing-sunglasses_162311768.jpg"
@@ -64,25 +64,25 @@ var work = {
 var projects = {
     "projects": [{
         "title": "Sample project 1",
-        "dates": 2016,
+        "dates": "2015-2016",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
         "images": "https://image.freepik.com/free-vector/rocket-launch-illustration_23-2147500712.jpg"
 
     }, {
         "title": "Sample project 2",
-        "dates": 2015,
+        "dates": "2014-2015",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
         "images": "https://image-gr.s3.envato.com/files/64960412/BIG%20IDEA%20ROCKET-590.jpg"
 
     }, {
         "title": "Sample project 3",
-        "dates": 2014,
+        "dates": "2013-2014",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
         "images": "http://www.youtodesign.com/uploads/allimg/1504/3780.jpg"
 
     }, {
         "title": "Sample project 4",
-        "dates": 2013,
+        "dates": "2012-2013",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
         "images": "http://www.youtodesign.com/uploads/allimg/1503/3736.jpg"
 
@@ -94,29 +94,22 @@ bio.display = function() {
     var b_Name = HTMLheaderName.replace("%data%", bio.name),
         b_Role = HTMLheaderRole.replace("%data%", bio.role),
         b_BioPic = HTMLbioPic.replace("%data%", bio.bioPic),
-        b_Msg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
+        b_Msg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage),
+		c_Mobile = HTMLmobile.replace("%data%", bio.contacts.mobile),
+		c_Email = HTMLemail.replace("%data%", bio.contacts.email),
+        c_Twitter = HTMLtwitter.replace("%data%", bio.contacts.twitter),
+        c_Github = HTMLgithub.replace("%data%", bio.contacts.github),
+		c_Blog = HTMLblog.replace("%data%", bio.contacts.blog),
+		formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location),
+        c_Contact = c_Mobile + c_Email + c_Twitter + c_Github + c_Blog + formattedLocation;
 
     $("#header").prepend(b_Role);
     $("#header").prepend(b_Name);
     $("#header").append(b_BioPic);
     $("#header").append(b_Msg);
-
-    for (var contact in bio.contacts) {
-        if (bio.contacts.hasOwnProperty(contact)) {
-            var c_Mobile = HTMLmobile.replace("%data%", bio.contacts[contact].mobile),
-                c_Email = HTMLemail.replace("%data%", bio.contacts[contact].email),
-                c_Twitter = HTMLtwitter.replace("%data%", bio.contacts[contact].twitter),
-                c_Github = HTMLgithub.replace("%data%", bio.contacts[contact].github),
-                c_Blog = HTMLblog.replace("%data%", bio.contacts[contact].blog),
-                c_Location = HTMLlocation.replace("%data%", bio.contacts[contact].location),
-                c_Contact = c_Mobile + c_Email + c_Twitter + c_Github + c_Blog + c_Location;
-
-            $("#footerContacts").append(c_Contact);
-        }
-    }
-
-
-    $("#header").append(HTMLskillsStart);
+	$("#footerContacts").append(c_Contact);
+	$("#header").append(HTMLskillsStart);
+	
     for (var i = 0; i < bio.skills.length; i++) {
         var formatedSkill = HTMLskills.replace("%data%", bio.skills[i]);
         $("#skills").append(formatedSkill);
@@ -178,9 +171,7 @@ education.display = function() {
             }
         }
     }
-};
-education.onlineDisplay = function() {
-
+	
     $("#online").append(HTMLonlineClasses);
 
     for (var online in education.onlineCourses) {
@@ -198,12 +189,9 @@ education.onlineDisplay = function() {
 };
 
 
-
 bio.display();
 work.display();
 projects.display();
-education.onlineDisplay();
 education.display();
-
 
 $("#mapDiv").append(googleMap);
