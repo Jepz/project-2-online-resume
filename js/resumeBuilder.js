@@ -7,11 +7,12 @@ var bio = {
         "github": "Jepz",
         "blog": "jepz.me",
         "twitter": "jeppsonone",
-        "location": "London, UK, Europe"
+        "location": "Stockholm"
     },
     "welcomeMessage": "Hell! This is a welcome message",
     "skills": ["code", "design", "ux"],
-    "bioPic": "http://png.clipart.me/graphics/thumbs/162/man-smoking-marijuana-cigarette-and-wearing-sunglasses_162311768.jpg"
+    "biopic": "http://png.clipart.me/graphics/thumbs/162/man-smoking-marijuana-cigarette-and-wearing-sunglasses_162311768.jpg",
+
 };
 
 var education = {
@@ -37,7 +38,7 @@ var education = {
     "onlineCourses": [{
         "title": "Javascript crash course",
         "school": "Udacity",
-        "dates": 2016,
+        "date": 2016,
         "url": "http://www.udacity.com"
     }]
 };
@@ -66,34 +67,38 @@ var projects = {
         "title": "Sample project 1",
         "dates": "2015-2016",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
-        "images": "https://image.freepik.com/free-vector/rocket-launch-illustration_23-2147500712.jpg"
+        "images": ["https://image.freepik.com/free-vector/rocket-launch-illustration_23-2147500712.jpg","https://image-gr.s3.envato.com/files/64960412/BIG%20IDEA%20ROCKET-590.jpg","http://www.youtodesign.com/uploads/allimg/1504/3780.jpg","http://www.youtodesign.com/uploads/allimg/1503/3736.jpg"]
 
     }, {
         "title": "Sample project 2",
         "dates": "2014-2015",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
-        "images": "https://image-gr.s3.envato.com/files/64960412/BIG%20IDEA%20ROCKET-590.jpg"
+        "images": ["https://image.freepik.com/free-vector/rocket-launch-illustration_23-2147500712.jpg","https://image-gr.s3.envato.com/files/64960412/BIG%20IDEA%20ROCKET-590.jpg","http://www.youtodesign.com/uploads/allimg/1504/3780.jpg","http://www.youtodesign.com/uploads/allimg/1503/3736.jpg"]
+        
 
     }, {
         "title": "Sample project 3",
         "dates": "2013-2014",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
-        "images": "http://www.youtodesign.com/uploads/allimg/1504/3780.jpg"
+        "images": ["https://image.freepik.com/free-vector/rocket-launch-illustration_23-2147500712.jpg","https://image-gr.s3.envato.com/files/64960412/BIG%20IDEA%20ROCKET-590.jpg","http://www.youtodesign.com/uploads/allimg/1504/3780.jpg","http://www.youtodesign.com/uploads/allimg/1503/3736.jpg"]
+        
 
     }, {
         "title": "Sample project 4",
         "dates": "2012-2013",
         "description": "Four loko hella humblebrag street art bicycle rights ennui, echo park green juice poutine austin trust fund paleo hoodie. +1 chartreuse iPhone cronut. Locavore offal VHS, pitchfork williamsburg viral thundercats artisan yuccie blue bottle readymade listicle authentic. Sartorial flexitarian single-origin coffee plaid.",
-        "images": "http://www.youtodesign.com/uploads/allimg/1503/3736.jpg"
+        "images": ["https://image.freepik.com/free-vector/rocket-launch-illustration_23-2147500712.jpg","https://image-gr.s3.envato.com/files/64960412/BIG%20IDEA%20ROCKET-590.jpg","http://www.youtodesign.com/uploads/allimg/1504/3780.jpg","http://www.youtodesign.com/uploads/allimg/1503/3736.jpg"]
+        
 
     }]
 };
+
 
 bio.display = function() {
 
     var b_Name = HTMLheaderName.replace("%data%", bio.name),
         b_Role = HTMLheaderRole.replace("%data%", bio.role),
-        b_BioPic = HTMLbioPic.replace("%data%", bio.bioPic),
+        b_BioPic = HTMLbioPic.replace("%data%", bio.biopic),
         b_Msg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage),
 		c_Mobile = HTMLmobile.replace("%data%", bio.contacts.mobile),
 		c_Email = HTMLemail.replace("%data%", bio.contacts.email),
@@ -103,12 +108,13 @@ bio.display = function() {
 		formattedLocation = HTMLlocation.replace("%data%", bio.contacts.location),
         c_Contact = c_Mobile + c_Email + c_Twitter + c_Github + c_Blog + formattedLocation;
 
-    $("#header").prepend(b_Role);
-    $("#header").prepend(b_Name);
-    $("#header").append(b_BioPic);
-    $("#header").append(b_Msg);
+    $("#header").prepend(b_Role)
+		.prepend(b_Name)
+		.append(b_BioPic)
+		.append(b_Msg)
+		.append(HTMLskillsStart);
 	$("#footerContacts").append(c_Contact);
-	$("#header").append(HTMLskillsStart);
+
 	
     for (var i = 0; i < bio.skills.length; i++) {
         var formatedSkill = HTMLskills.replace("%data%", bio.skills[i]);
@@ -118,14 +124,15 @@ bio.display = function() {
 
 
 work.display = function() {
-    for (var job in work.jobs) {
-        if (work.jobs.hasOwnProperty(job)) {
+	var len = work.jobs.length;
+    for (var i = 0; i < len; i++) {
+        if (work.jobs.hasOwnProperty(i)) {
             $("#workExperience").append(HTMLworkStart);
-            var w_Employer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer),
-                w_Title = HTMLworkTitle.replace("%data%", work.jobs[job].title),
-                w_Date = HTMLworkDates.replace("%data%", work.jobs[job].dates),
-                w_Location = HTMLworkLocation.replace("%data%", work.jobs[job].location),
-                w_Description = HTMLworkDescription.replace("%data%", work.jobs[job].description),
+            var w_Employer = HTMLworkEmployer.replace("%data%", work.jobs[i].employer),
+                w_Title = HTMLworkTitle.replace("%data%", work.jobs[i].title),
+                w_Date = HTMLworkDates.replace("%data%", work.jobs[i].dates),
+                w_Location = HTMLworkLocation.replace("%data%", work.jobs[i].location),
+                w_Description = HTMLworkDescription.replace("%data%", work.jobs[i].description),
                 w_Job = w_Date + w_Location + w_Employer + w_Title + w_Description;
 
             $(".work-entry:last").append(w_Job);
@@ -134,14 +141,15 @@ work.display = function() {
 };
 
 projects.display = function() {
-    for (var project in projects.projects) {
-        if (projects.projects.hasOwnProperty(project)) {
+	var len = projects.projects.length;
+    for (var i = 0; i < len; i++) {
+        if (projects.projects.hasOwnProperty(i)) {
             $("#projects").append(HTMLprojectStart);
 
-            var p_Title = HTMLprojectTitle.replace("%data%", projects.projects[project].title),
-                p_Date = HTMLprojectDates.replace("%data%", projects.projects[project].dates),
-                p_Image = HTMLprojectImage.replace("%data%", projects.projects[project].images),
-                p_Description = HTMLprojectDescription.replace("%data%", projects.projects[project].description),
+            var p_Title = HTMLprojectTitle.replace("%data%", projects.projects[i].title),
+                p_Date = HTMLprojectDates.replace("%data%", projects.projects[i].dates),
+                p_Image = HTMLprojectImage.replace("%data%", projects.projects[i].images[i]),
+                p_Description = HTMLprojectDescription.replace("%data%", projects.projects[i].description),
                 p_Project = p_Image + p_Title + p_Date + p_Description;
 
             $(".project-entry:last").append(p_Project);
@@ -150,21 +158,21 @@ projects.display = function() {
 };
 
 education.display = function() {
-
-    for (var school in education.schools) {
-        if (education.schools.hasOwnProperty(school)) {
+	
+	    for (var i = 0, len = education.schools.length; i < len; i++) {
+        if (education.schools.hasOwnProperty(i)) {
 
             $("#education").append(HTMLschoolStart);
-            var e_Name = HTMLschoolName.replace("%data%", education.schools[school].name),
-                e_Date = HTMLschoolDates.replace("%data%", education.schools[school].dates),
-                e_Degree = HTMLschoolDegree.replace("%data%", education.schools[school].degree),
-                e_Location = HTMLschoolLocation.replace("%data%", education.schools[school].location),
+            var e_Name = HTMLschoolName.replace("%data%", education.schools[i].name),
+                e_Date = HTMLschoolDates.replace("%data%", education.schools[i].dates),
+                e_Degree = HTMLschoolDegree.replace("%data%", education.schools[i].degree),
+                e_Location = HTMLschoolLocation.replace("%data%", education.schools[i].location),
                 e_School = e_Date + e_Location + e_Name + e_Degree;
             $(".education-entry:last").append(e_School);
-
-            for (var major in education.schools[school].majors) {
-                if (education.schools[school].majors.hasOwnProperty(major)) {
-                    var e_Major = HTMLschoolMajor.replace("%data%", education.schools[school].majors[major]);
+			
+            for (var x = 0, gth = education.schools[i].majors.length; x < gth; x++) {
+                if (education.schools[i].majors.hasOwnProperty(x)) {
+                    var e_Major = HTMLschoolMajor.replace("%data%", education.schools[i].majors[x]);
                     $(".education-entry:last").append(e_Major);
 
                 }
@@ -172,18 +180,16 @@ education.display = function() {
         }
     }
 	
-    $("#online").append(HTMLonlineClasses);
-
-    for (var online in education.onlineCourses) {
-        if (education.onlineCourses.hasOwnProperty(online)) {
-            $("#online").append(HTMLonlineStart);
-            var o_Title = HTMLonlineTitle.replace("%data%", education.onlineCourses[online].title),
-                o_School = HTMLonlineSchool.replace("%data%", education.onlineCourses[online].school),
-                o_Dates = HTMLonlineDates.replace("%data%", education.onlineCourses[online].dates),
-                o_URL = HTMLonlineURL.replace("%data%", education.onlineCourses[online].url),
+	$(".education-entry:last").append(HTMLonlineClasses);
+    for (var i = 0, len = education.onlineCourses.length; i < len; i++) {
+        if (education.onlineCourses.hasOwnProperty(i)) {
+            var o_Title = HTMLonlineTitle.replace("%data%", education.onlineCourses[i].title),
+                o_School = HTMLonlineSchool.replace("%data%", education.onlineCourses[i].school),
+                o_Dates = HTMLonlineDates.replace("%data%", education.onlineCourses[i].date),
+                o_URL = HTMLonlineURL.replace("%data%", education.onlineCourses[i].url),
                 o_Online = o_Title + o_School + o_Dates + o_URL;
 
-            $(".online-education-entry:last").append(o_Online);
+            $(".education-entry:last").append(o_Online);
         }
     }
 };
